@@ -1,33 +1,42 @@
 <!DOCtype html>
 <html>
   <head>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="https://unpkg.com/vue@2.2.6"></script>
+    <!-- d3js and vue.js -->
+    <script src="common.js"></script>
+    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/vue@2.2.6"></script> -->
     <style>
-    .svg {
-      background-color: #ccc;
-    }
-    svg {
-      margin: 25px;
-    }
-    svg path {
-      fill: none;
-      stroke: #76BF8A;
-      stroke-width: 3px;
-    }
-    .line {
-      fill: none;
-      stroke: steelblue;
-      stroke-width: 2px;
-    }
+      .svg {
+        background-color: #ccc;
+      }
+
+      svg {
+        margin: 25px;
+      }
+
+      svg path {
+        fill: none;
+        stroke: #76BF8A;
+        stroke-width: 3px;
+      }
     </style>
   </head>
 
   <body>
     <div id="app">
-      <div v-for="item in items">
-        <div id="svg"></div>
+      <div class="wins">
+        Wins: {{ score.wins }}
       </div>
+      <div class="losses">
+        Losses: {{ getLosses }}
+      </div>
+      <div class="total">
+        Total: {{ score.total }}
+      </div>
+      <div class="percentage">
+        Win %: {{ getScore }}
+      </div>
+      <div id="svg"></div>
     </div>
   </body>
   <script src="montyHall.js"></script>
