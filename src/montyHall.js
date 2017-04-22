@@ -33,17 +33,34 @@
       .attr('height', 270)
       .append('g')
       .attr('transform', 'translate(0, 10)')
-      this.x = d3.scaleLinear().range([0, 430])
-      this.y = d3.scaleLinear().range([210, 0])
-      d3.axisLeft().scale(this.x)
-      d3.axisTop().scale(this.y)
-      this.x.domain(d3.extent(data, (d, i) => i))
-      this.y.domain([0, d3.max(data, d => d)])
+
+      svg.append("text")
+      .attr("class", "y label")
+      .attr("text-anchor", "end")
+      .attr("y", 6)
+      .attr("dy", ".75em")
+      .attr("transform", "rotate(-90)")
+      .text("win percentage");
+
+
+      
+
+      const x = d3.scaleLinear().range([0, 430])
+      const y = d3.scaleLinear().range([100, 0])
+      d3.axisLeft().scale(x)
+      d3.axisTop().scale(y)
+      x.domain(d3.extent(data, (d, i) => i))
+      y.domain([0, d3.max(data, d => d)])
       const createPath = d3.line()
-        .x((d, i) => this.x(i))
-        .y(d => this.y(d))
+        .x((d, i) => x(i))
+        .y(d => y(d))
+
+      const yAxis = d3.scaleLinear().range([100, 0]);
+      svg.append("g")
+      .call(d3.axisLeft(yAxis));
+
       svg.append('path').attr('d', createPath(data))
-      console.log(this.x, this.y, data)
+
     },
 
     methods: {
@@ -70,20 +87,15 @@
       },
 
       redraw () {
-        console.log('drawing')
-        
-      // .append('svg')
-      // .attr('width', 500)
-      // .attr('height', 270)
-      // .append('g')
-      // .attr('transform', 'translate(0, 10)')
-      this.x.domain(d3.extent(data, (d, i) => i))
-      this.y.domain([0, d3.max(data, d => d)])
-      const createPath = d3.line()
-        .x((d, i) => this.x(i))
-        .y(d => this.y(d))
-      const svg = d3.select(document.getElementById('svg')).transition()
-      svg.select('path').attr('d', createPath(data))
+        const x = d3.scaleLinear().range([0, 430])
+        const y = d3.scaleLinear().range([210, 0])
+        x.domain(d3.extent(data, (d, i) => i))
+        y.domain([0, d3.max(data, d => d)])
+        const createPath = d3.line()
+          .x((d, i) => x(i))
+          .y(d => y(d))
+        const svg = d3.select(document.getElementById('svg')).transition()
+        svg.select('path').attr('d', createPath(data))
       }
     }
   })
